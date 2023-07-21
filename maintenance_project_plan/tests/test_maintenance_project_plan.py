@@ -5,27 +5,28 @@ import odoo.tests.common as test_common
 
 
 class TestMaintenanceProjectPlan(test_common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.cron = self.env.ref("maintenance.maintenance_requests_cron")
+        cls.cron = cls.env.ref("maintenance.maintenance_requests_cron")
 
-        self.maintenance_kind_test = self.env["maintenance.kind"].create(
+        cls.maintenance_kind_test = cls.env["maintenance.kind"].create(
             {"name": "Test kind"}
         )
 
-        self.monitor1 = self.env.ref("maintenance.equipment_monitor1")
-        self.monitor1.maintenance_plan_ids = [
+        cls.monitor1 = cls.env.ref("maintenance.equipment_monitor1")
+        cls.monitor1.maintenance_plan_ids = [
             (
                 0,
                 0,
                 {
-                    "maintenance_kind_id": self.maintenance_kind_test.id,
+                    "maintenance_kind_id": cls.maintenance_kind_test.id,
                     "duration": 1,
-                    "project_id": self.env.ref(
+                    "project_id": cls.env.ref(
                         "maintenance_project.project_project_1"
                     ).id,
-                    "task_id": self.env.ref("maintenance_project.project_task_11").id,
+                    "task_id": cls.env.ref("maintenance_project.project_task_11").id,
                 },
             )
         ]
